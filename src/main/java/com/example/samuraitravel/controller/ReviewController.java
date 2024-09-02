@@ -119,7 +119,7 @@ public class ReviewController {
 		model.addAttribute("house", house);
 		model.addAttribute("reviewEditForm", reviewEditForm);
 
-		return "/review/edit";
+		return "review/edit";
 	}
 
 	//update機能
