@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
+
+<head>
+	<!-- meta, styles, titleの部分 -->
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: styles}"></div>
+	<title>お気に入り一覧</title>
+</head>
+
+<body>
+	<div class="samuraitravel-wrapper">
+		<!-- ヘッダー -->
+		<div th:replace="~{fragment :: header}"></div>
+
+		<main>
+			<div class="container samuraitravel-container pb-5">
+				<div class="row justify-content-center">
+					<!-- パンくずリスト -->
+					<nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+							<li class="breadcrumb-item active" aria-current="page">お気に入り一覧</li>
+						</ol>
+					</nav>
+
+					<div class="col">
+						<div class="d-flex justify-content-between flex-wrap">
+							<p th:if="${housePages.totalPages > 1}" class="fs-5 mb-3"
+								th:text="${'検索結果：' + housePages.totalElements + '件' + '(' + (housePages.number + 1) + '/' + housePages.totalPages + 'ページ'}">
+							</p>
+							<p th:unless="${housePages.totalPages > 1}" class="fs-5 mb-3"
+								th:text="${'検索結果：' + housePages.totalElements + '件'}"></p>
+						</div>
+
+						<!-- お気に入り民宿一覧の表示 -->
+						<div th:if="${#lists.isEmpty(housePages.content)}" class="mb-4">
+							<p class="text-center">まだお気に入りが登録されていません。</p>
+						</div>
+						<div th:unless="${#lists.isEmpty(housePages.content)}"
+							class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+							<div th:each="house : ${housePages.content}" class="col">
+								<a th:href="@{/houses/{id}(id=${house.id})}" class="link-dark samuraitravel-card-link">
+									<div class="card h-100">
+										<div class="row g-0">
+											<div class="col-md-4">
+												<img th:if="${house.imageName}"
+													th:src="@{/storage/{imageName}(imageName=${house.imageName})}"
+													class="card-img-top samuraitravel-horizontal-card-image" alt="店舗画像">
+												<img th:unless="${house.imageName}" th:src="@{/images/noImage.png}"
+													class="card-img-top samuraitravel-horizontal-card-image"
+													alt="NO IMAGE">
+											</div>
+											<div class="col-md-8">
+												<div class="card-body">
+													<h3 class="card-title mb-3" th:text="${house.name}"></h3>
+													<hr class="mb-3">
+													<p class="card-text mb-2">
+														<span th:text="${house.description}"></span>
+													</p>
+													<p class="card-text mb-2">
+														<small class="text-muted"
+															th:text="${'〒' + house.postalCode}"></small>
+														<small class="text-muted" th:text="${house.address}"></small>
+													</p>
+													<p class="card-text">
+														<span
+															th:text="${#numbers.formatInteger(house.price, 1, 'COMMA') + '円 / 泊'}"></span>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+
+						<!-- ページネーション -->
+						<div th:if="${housePages.totalPages > 1}" class="d-flex justify-content-center">
+							<nav aria-label="民宿一覧ページ">
+								<ul class="pagination">
+									<li class="page-item">
+										<span th:if="${housePages.first}" class="page-link disabled">前</span>
+										<a th:unless="${housePages.first}"
+											th:href="@{/favorites(page=${housePages.number - 1})}"
+											class="page-link">前</a>
+									</li>
+									<li th:each="i : ${#numbers.sequence(0, housePages.totalPages -1)}"
+										class="page-item">
+										<span th:if="${i == housePages.number}" class="page-link active"
+											th:text="${i + 1}"></span>
+										<a th:unless="${i == housePages.number}" th:href="@{/favorites(page=${i})}"
+											class="page-link" th:text="${i + 1}"></a>
+									</li>
+
+									<li class="page-item">
+										<span th:if="${housePages.last}" class="page-link disabled">次</span>
+										<a th:unless="${housePages.last}"
+											th:href="@{/favorites(page=${housePages.number + 1})}"
+											class="page-link">次</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- フッター -->
+		<div th:replace="~{fragment :: footer}"></div>
+	</div>
+
+	<!-- Bootstrap -->
+	<div th:replace="~{fragment :: scripts}"></div>
+
+</body>
+
+</html>
