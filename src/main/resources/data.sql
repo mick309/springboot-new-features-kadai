@@ -99,6 +99,7 @@ INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, c
 INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, created_at,  updated_at) VALUES (8, 8, 1, 2, '施設内の設備が充実していｔました。', '2023-04-01', '2023-04-02');
 INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, created_at,  updated_at) VALUES (9, 9, 1, 3, 'Wi-Fiが快適で助かりました。', '2023-04-01', '2023-04-02');
 INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, created_at,  updated_at) VALUES (10, 10, 1, 4, '清潔感があり気持ちよく滞在できました。', '2023-04-01', '2023-04-02');
+<<<<<<< HEAD
 INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, created_at,  updated_at) VALUES (11, 11, 1, 3, '', '2023-04-01', '2023-04-02');
 
 -- favoritesテーブル --
@@ -115,3 +116,6 @@ INSERT IGNORE INTO favorites (id, user_id, house_id, created_at, updated_at) VAL
 INSERT IGNORE INTO favorites (id, user_id, house_id, created_at, updated_at) VALUES (11, 11, 1, '2023-04-02', '2023-04-03');
 
 
+=======
+INSERT IGNORE INTO reviews (id, user_id, house_id, evaluation, review_comment, created_at,  updated_at) VALUES (11, 11, 1, 3, '', '2023-04-01', '2023-04-02');
+>>>>>>> branch 'main' of https://github.com/mick309/springboot-new-features-kadai.git
